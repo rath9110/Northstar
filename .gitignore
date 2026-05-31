@@ -1,1 +1,19 @@
+# Virtual environment
+.venv/
+venv/
+
+# Environment variables (never commit secrets)
 .env
+.env.*
+
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+
+# PyCharm
+.idea/
+
+# Database files
+*.db
+*.sqlite3

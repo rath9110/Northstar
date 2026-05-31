@@ -1,9 +1,4 @@
-#packages
-import fastapi
-import uvicorn
-import sqlalchemy
-import psycopg2
-import os
+
 os.getenv("connection_string")
 
 app = fastapi.FastAPI()
