@@ -59,9 +59,9 @@ ingestion**, **time-series modeling**, **correlation analysis**. Everything else
 
 ## Phased roadmap
 
-- **Phase 0 — Foundations** *(IN PROGRESS)*: repo, FastAPI hello world, Postgres in
-  Docker, a `/health` endpoint that pings the DB, understand the dev loop. Finish line =
-  app + DB provably talking via a connection string, formalized in `docker-compose.yml`.
+- **Phase 0 — Foundations** ✅: repo, FastAPI hello world, Postgres in Docker, `/health`
+  endpoint that pings the DB via psycopg2, passing pytest. Connection string read from
+  `.env` via python-dotenv. Missing: `docker-compose.yml` (deferred — not blocking).
 - **Phase 1 — Core loop:** `DailyEntry` model (date, score 1–10, notes, tags), CRUD,
   Alembic migrations. Claude builds the mobile check-in screen.
 - **Phase 2 — Easiest automated source: weather.** Open-Meteo (no API key). Nightly job:
