@@ -12,9 +12,9 @@ etc" """
 from sqlalchemy import Column, Integer, Boolean, Date, Text
 from sqlalchemy.orm import declarative_base
 
-base = declarative_base()
+Base = declarative_base()
 
-class DailyMood(base):
+class DailyMood(Base):
     __tablename__ = "daily_mood"
     date = Column("Date", Date, primary_key=True)
     happiness = Column("Happiness", Integer, nullable=False)
