@@ -1,4 +1,5 @@
 import fastapi 
+from fastapi import Depends
 import uvicorn 
 import sqlalchemy
 import psycopg2
@@ -36,6 +37,11 @@ def health():
         return {"status": "ok"}
     except Exception as e:
         return {"status": "error", "message": str(e)}
+
+from database import get_db
+app.post("/mood")
+def create_mood(db = Depends(get_db)):
+    pass
         
 
 if __name__ == "__main__":
