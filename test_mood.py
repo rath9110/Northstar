@@ -36,4 +36,4 @@ def test_delete_mood():
     response = client.delete("/mood/2026-06-02")
     assert response.status_code == 200
     assert response.json() == {"message": "Mood entry deleted successfully."}
-    
+
