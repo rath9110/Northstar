@@ -37,6 +37,7 @@ def create_mood(mood: DailyMoodCreate, db = Depends(get_db)):
         friends_family_time=mood.friends_family_time,
         notes=mood.notes
     )
+    
     stmt = stmt.on_conflict_do_update(
         index_elements=['date'],
         set_={
@@ -49,7 +50,7 @@ def create_mood(mood: DailyMoodCreate, db = Depends(get_db)):
     )
     db.execute(stmt)
     db.commit()
-    return stmt
+    return db.get(DailyMood, mood.date)
         
 
 if __name__ == "__main__":
