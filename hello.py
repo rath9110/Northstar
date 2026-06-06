@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from database import get_db
 from schemas import DailyMoodCreate
 from models import DailyMood
+from sqlalchemy.dialects.postgresql import insert
 
 load_dotenv()
 connection_string = os.getenv("DATABASE_CONNECTION")
@@ -28,7 +29,7 @@ def create_mood(mood: DailyMoodCreate, db = Depends(get_db)):
     if mood is None:
         return {"error": "Invalid mood data"}
 
-    db_mood = DailyMood(
+    stmt = insert(DailyMood).values(
         date=mood.date,
         happiness=mood.happiness,
         energy=mood.energy,
@@ -36,10 +37,19 @@ def create_mood(mood: DailyMoodCreate, db = Depends(get_db)):
         friends_family_time=mood.friends_family_time,
         notes=mood.notes
     )
-    db.add(db_mood)
+    stmt = stmt.on_conflict_do_update(
+        index_elements=['date'],
+        set_={
+            "happiness": stmt.excluded.happiness,
+            "energy": stmt.excluded.energy,
+            "stressed": stmt.excluded.stressed,
+            "friends_family_time": stmt.excluded.friends_family_time,
+            "notes": stmt.excluded.notes
+        }
+    )
+    db.execute(stmt)
     db.commit()
-    db.refresh(db_mood)
-    return db_mood
+    return stmt
         
 
 if __name__ == "__main__":

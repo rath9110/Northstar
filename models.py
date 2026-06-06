@@ -16,9 +16,9 @@ Base = declarative_base()
 
 class DailyMood(Base):
     __tablename__ = "daily_mood"
-    date = Column("Date", Date, primary_key=True)
-    happiness = Column("Happiness", Integer, nullable=False)
-    energy = Column("Energy", Integer, nullable=False)
-    stressed = Column("Stressed", Boolean, nullable=False)
-    friends_family_time = Column("FriendsFamilyTime", Boolean, nullable=False)
-    notes = Column("Notes", Text, nullable=True)
+    date = Column(Date, primary_key=True)
+    happiness = Column(Integer, nullable=False)
+    energy = Column(Integer, nullable=False)
+    stressed = Column(Boolean, nullable=False)
+    friends_family_time = Column(Boolean, nullable=False)
+    notes = Column(Text, nullable=True)
