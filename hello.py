@@ -55,7 +55,25 @@ def create_mood(mood: DailyMoodCreate, db = Depends(get_db)):
 @app.get("/mood")
 def get_moods(db = Depends(get_db)):
     moods = db.query(DailyMood).all()
+    for mood in moods:
+        print(mood)
     return moods
+
+@app.get("/mood/{date}")
+def get_mood_by_date(date: str, db = Depends(get_db)):
+    mood = db.get(DailyMood, date)
+    if mood is None:
+        return {"error": "Mood entry not found for the given date."}
+    return mood
+
+@app.delete("/mood/{date}")
+def delete_mood(date: str, db = Depends(get_db)):
+    mood = db.get(DailyMood, date)
+    if mood is None:
+        return {"error": "Mood entry not found for the given date."}
+    db.delete(mood)
+    db.commit()
+    return {"message": "Mood entry deleted successfully."}
         
 
 if __name__ == "__main__":

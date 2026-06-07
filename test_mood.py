@@ -4,7 +4,7 @@ client = TestClient(app)
 
 def test_create_mood():
     response = client.post("/mood", json={
-        "date": "2026-06-02",
+        "date": "2026-06-03",
         "happiness": 8,
         "energy": 7,
         "stressed": False,
