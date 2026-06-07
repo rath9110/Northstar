@@ -51,6 +51,11 @@ def create_mood(mood: DailyMoodCreate, db = Depends(get_db)):
     db.execute(stmt)
     db.commit()
     return db.get(DailyMood, mood.date)
+
+@app.get("/mood")
+def get_moods(db = Depends(get_db)):
+    moods = db.query(DailyMood).all()
+    return moods
         
 
 if __name__ == "__main__":
