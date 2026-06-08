@@ -4,7 +4,7 @@ client = TestClient(app)
 
 def test_create_mood():
     response = client.post("/mood", json={
-        "date": "2026-06-03",
+        "date": "2999-12-31",
         "happiness": 8,
         "energy": 7,
         "stressed": False,
@@ -13,7 +13,7 @@ def test_create_mood():
     })
     assert response.status_code == 200
     assert response.json() == {
-        "date": "2026-06-02",
+        "date": "2999-12-31",
         "happiness": 8,
         "energy": 7,
         "stressed": False,
@@ -22,10 +22,10 @@ def test_create_mood():
     }
 
 def test_get_mood_by_date():
-    response = client.get("/mood/2026-06-02")
+    response = client.get("/mood/2999-12-31")
     assert response.status_code == 200
     assert response.json() == {
-        "date": "2026-06-02",
+        "date": "2999-12-31",
         "happiness": 8,
         "energy": 7,
         "stressed": False,
@@ -40,7 +40,7 @@ def test_get_all_moods():
     assert len(response.json()) > 0
 
 def test_delete_mood():
-    response = client.delete("/mood/2026-06-02")
+    response = client.delete("/mood/2999-12-31")
     assert response.status_code == 200
     assert response.json() == {"message": "Mood entry deleted successfully."}
 

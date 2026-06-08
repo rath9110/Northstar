@@ -62,8 +62,10 @@ ingestion**, **time-series modeling**, **correlation analysis**. Everything else
 - **Phase 0 — Foundations** ✅: repo, FastAPI hello world, Postgres in Docker, `/health`
   endpoint that pings the DB via psycopg2, passing pytest. Connection string read from
   `.env` via python-dotenv. Missing: `docker-compose.yml` (deferred — not blocking).
-- **Phase 1 — Core loop:** `DailyEntry` model (date, score 1–10, notes, tags), CRUD,
-  Alembic migrations. Claude builds the mobile check-in screen.
+- **Phase 1 — Core loop** ✅: `DailyMood` model (date, happiness 1–10, energy 1–10,
+  stressed bool, friends_family_time bool, notes text), CRUD endpoints (POST/GET/DELETE),
+  Alembic migrations, upsert on conflict. Pydantic schema in `schemas.py`, DB session
+  in `database.py`. 4 passing tests. Claude still needs to build the mobile check-in screen.
 - **Phase 2 — Easiest automated source: weather.** Open-Meteo (no API key). Nightly job:
   fetch → normalize → upsert idempotently → store. Learn the reusable ingestion pattern.
 - **Phase 3 — OAuth sources: Polar, then Google Calendar.** OAuth2 auth-code flow, secure
