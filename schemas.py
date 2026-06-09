@@ -1,6 +1,7 @@
-﻿from pydantic import BaseModel
-from datetime import date
 
+from pydantic import BaseModel
+from pydantic import ConfigDict
+from datetime import date
 
 class DailyMoodCreate(BaseModel):
     date: date
@@ -9,3 +10,6 @@ class DailyMoodCreate(BaseModel):
     stressed: bool
     friends_family_time: bool
     notes: str | None = None
+    weather: str | None = None
+
+    model_config = ConfigDict(from_attributes=True)

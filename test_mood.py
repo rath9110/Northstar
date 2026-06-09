@@ -1,5 +1,6 @@
 from fastapi.testclient import TestClient
 from hello import app
+from weather import get_weather_code_for_today
 client = TestClient(app)
 
 def test_create_mood():
@@ -18,7 +19,8 @@ def test_create_mood():
         "energy": 7,
         "stressed": False,
         "friends_family_time": True,
-        "notes": "Had a good day!"
+        "notes": "Had a good day!",
+        "weather_code": None
     }
 
 def test_get_mood_by_date():
@@ -30,7 +32,8 @@ def test_get_mood_by_date():
         "energy": 7,
         "stressed": False,
         "friends_family_time": True,
-        "notes": "Had a good day!"
+        "notes": "Had a good day!",
+        "weather_code": None
     }
 
 def test_get_all_moods():

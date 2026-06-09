@@ -21,4 +21,5 @@ class DailyMood(Base):
     energy = Column(Integer, nullable=False)
     stressed = Column(Boolean, nullable=False)
     friends_family_time = Column(Boolean, nullable=False)
+    weather_code = Column(Integer, nullable=True)
     notes = Column(Text, nullable=True)
