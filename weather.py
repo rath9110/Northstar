@@ -54,5 +54,8 @@ def get_weather_code_for_today(lat=59.334591, lon=18.063240):
         weather_code = weather_data['daily']['weather_code'][0]
         return dict_weather_codes.get(weather_code, 'Unknown')
 
-print(get_weather_code_for_today())
+def __init__():
+    print(get_weather_code_for_today())
+
+__init__()
 

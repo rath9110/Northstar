@@ -9,7 +9,7 @@ etc" """
   3. What the primary key is — think about what uniquely identifies a day  -> day_id that is a date and primary key
 """
 
-from sqlalchemy import Column, Integer, Boolean, Date, Text
+from sqlalchemy import Column, Integer, Boolean, Date, Text, String
 from sqlalchemy.orm import declarative_base
 
 Base = declarative_base()
@@ -21,5 +21,5 @@ class DailyMood(Base):
     energy = Column(Integer, nullable=False)
     stressed = Column(Boolean, nullable=False)
     friends_family_time = Column(Boolean, nullable=False)
-    weather_code = Column(Integer, nullable=True)
+    weather_code = Column(String, nullable=True)
     notes = Column(Text, nullable=True)

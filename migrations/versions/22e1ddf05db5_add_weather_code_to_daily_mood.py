@@ -19,8 +19,8 @@ depends_on: Union[str, Sequence[str], None] = None
 
 
 def upgrade() -> None:
-    op.add_column("daily_mood", sa.Column("weather_code", sa.Integer(), nullable=True))
+    op.alter_column("weather_code", sa.String(), nullable=True)
 
 
 def downgrade() -> None:
-    op.drop_column("daily_mood", "weather_code")
+    op.add_column("daily_mood", sa.Column("weather_code", sa.Integer(), nullable=True))
