@@ -19,7 +19,7 @@ depends_on: Union[str, Sequence[str], None] = None
 
 
 def upgrade() -> None:
-    op.alter_column("weather_code", sa.String(), nullable=True)
+    op.alter_column("daily_mood", "weather_code", sa.String(), nullable=True)
 
 
 def downgrade() -> None:
