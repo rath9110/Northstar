@@ -53,9 +53,6 @@ def get_weather_code_for_today(lat=59.334591, lon=18.063240):
         weather_data = openmeteo_response.json()
         weather_code = weather_data['daily']['weather_code'][0]
         return dict_weather_codes.get(weather_code, 'Unknown')
-
-def __init__():
-    print(get_weather_code_for_today())
-
-__init__()
-
+    else:
+        print(f"Error fetching weather data: {openmeteo_response.status_code}")
+        return 'Unknown'
