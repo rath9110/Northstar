@@ -14,6 +14,7 @@ load_dotenv()
 connection_string = os.getenv("DATABASE_CONNECTION")
 
 app = fastapi.FastAPI()
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
