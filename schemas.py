@@ -1,12 +1,10 @@
-
-from pydantic import BaseModel
-from pydantic import ConfigDict
+from pydantic import ConfigDict, Field, BaseModel
 from datetime import date
 
 class DailyMoodCreate(BaseModel):
     date: date
-    happiness: int
-    energy: int
+    happiness: int = Field(ge=0, le=10)
+    energy: int = Field(ge=0, le=10)
     stressed: bool
     friends_family_time: bool
     notes: str | None = None

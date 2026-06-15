@@ -1,5 +1,5 @@
 import fastapi 
-from fastapi import Depends
+from fastapi import Depends, HTTPException
 import uvicorn
 import os
 from dotenv import load_dotenv
@@ -7,6 +7,7 @@ from database import get_db
 from schemas import DailyMoodCreate
 from models import DailyMood
 from sqlalchemy.dialects.postgresql import insert
+from sqlalchemy import text
 from weather import get_weather_code_for_today
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -29,15 +30,13 @@ def read_root():
 @app.get("/health")
 def health(db = Depends(get_db)):
     try:
-        db.execute("SELECT 1")
+        db.execute(text("SELECT 1"))
         return {"status": "healthy"}
     except Exception as e:
-        return {"status": "unhealthy", "error": str(e)}
+        raise HTTPException(status_code=500, detail="Database connection failed")
 
 @app.post("/mood")
 def create_mood(mood: DailyMoodCreate, db = Depends(get_db)):
-    if mood is None:
-        return {"error": "Invalid mood data"}
     weather_code = get_weather_code_for_today()
 
     stmt = insert(DailyMood).values(
@@ -68,22 +67,21 @@ def create_mood(mood: DailyMoodCreate, db = Depends(get_db)):
 @app.get("/mood")
 def get_moods(db = Depends(get_db)):
     moods = db.query(DailyMood).all()
-    for mood in moods:
-        print(mood)
     return moods
+
 
 @app.get("/mood/{date}")
 def get_mood_by_date(date: str, db = Depends(get_db)):
     mood = db.get(DailyMood, date)
     if mood is None:
-        return {"error": "Mood entry not found for the given date."}
+        raise HTTPException(status_code=404, detail="Mood entry not found for the given date.")
     return mood
 
 @app.delete("/mood/{date}")
 def delete_mood(date: str, db = Depends(get_db)):
     mood = db.get(DailyMood, date)
     if mood is None:
-        return {"error": "Mood entry not found for the given date."}
+        raise HTTPException(status_code=404, detail="Mood entry not found for the given date.")
     db.delete(mood)
     db.commit()
     return {"message": "Mood entry deleted successfully."}

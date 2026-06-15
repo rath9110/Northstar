@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 
 function App() {
@@ -12,6 +12,21 @@ function App() {
   const [saved, setSaved] = useState(false)
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
+  const [moods, setMoods] = useState([])
+
+  async function loadMoods() {
+    try {
+      const res = await fetch('http://localhost:8000/mood')
+      if (!res.ok) throw new Error(`Server error ${res.status}`)
+      setMoods(await res.json())
+    } catch (err) {
+      setError(err.message)
+    }
+  }
+
+  useEffect(() => {
+    loadMoods()
+  }, [])
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -33,6 +48,7 @@ function App() {
       })
       if (!res.ok) throw new Error(`Server error ${res.status}`)
       setSaved(true)
+      loadMoods()
     } catch (err) {
       setError(err.message)
     } finally {
@@ -90,6 +106,23 @@ function App() {
           {loading ? 'Saving…' : 'Save today'}
         </button>
       </form>
+
+      <section className="history">
+        <h2>History</h2>
+        {moods.length === 0 && <p className="empty">No entries yet.</p>}
+        <ul className="mood-list">
+          {moods.map(mood => (
+            <li key={mood.date} className="mood-item">
+              <span className="mood-date">{mood.date}</span>
+              <span className="mood-stat">Happiness {mood.happiness}</span>
+              <span className="mood-stat">Energy {mood.energy}</span>
+              {mood.stressed && <span className="mood-tag">stressed</span>}
+              {mood.friends_family_time && <span className="mood-tag">friends/family</span>}
+              <span className="mood-weather">{mood.weather_code ?? '—'}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
     </div>
   )
 }
