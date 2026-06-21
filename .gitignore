@@ -17,3 +17,7 @@ __pycache__/
 # Database files
 *.db
 *.sqlite3
+
+#Docker and docker-compose files
+Dockerfile
+docker-compose.yml
