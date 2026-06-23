@@ -21,5 +21,9 @@ class DailyMood(Base):
     energy = Column(Integer, nullable=False)
     stressed = Column(Boolean, nullable=False)
     friends_family_time = Column(Boolean, nullable=False)
-    weather_code = Column(String, nullable=True)
     notes = Column(Text, nullable=True)
+
+class DailyAutomatedMood(Base):
+    __tablename__ = "daily_automated_mood"
+    date = Column(Date, primary_key=True)
+    weather_code = Column(String, nullable=True)
