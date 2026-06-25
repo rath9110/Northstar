@@ -1,3 +1,4 @@
+#Pydantic models for request validation and response serialization (API schemas)
 from pydantic import ConfigDict, Field, BaseModel
 from datetime import date
 
@@ -8,6 +9,5 @@ class DailyMoodCreate(BaseModel):
     stressed: bool
     friends_family_time: bool
     notes: str | None = None
-    weather_code: str | None = None
 
     model_config = ConfigDict(from_attributes=True)
