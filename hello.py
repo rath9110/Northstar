@@ -8,7 +8,6 @@ from schemas import DailyMoodCreate
 from models import DailyMood
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy import text
-from weather import get_weather_code_for_today
 from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv()
@@ -37,16 +36,13 @@ def health(db = Depends(get_db)):
 
 @app.post("/mood")
 def create_mood(mood: DailyMoodCreate, db = Depends(get_db)):
-    weather_code = get_weather_code_for_today()
-
     stmt = insert(DailyMood).values(
         date=mood.date,
         happiness=mood.happiness,
         energy=mood.energy,
         stressed=mood.stressed,
         friends_family_time=mood.friends_family_time,
-        notes=mood.notes,
-        weather_code=weather_code
+        notes=mood.notes
     )
     
     stmt = stmt.on_conflict_do_update(
@@ -56,8 +52,7 @@ def create_mood(mood: DailyMoodCreate, db = Depends(get_db)):
             "energy": stmt.excluded.energy,
             "stressed": stmt.excluded.stressed,
             "friends_family_time": stmt.excluded.friends_family_time,
-            "notes": stmt.excluded.notes,
-            "weather_code": stmt.excluded.weather_code
+            "notes": stmt.excluded.notes
         }
     )
     db.execute(stmt)
